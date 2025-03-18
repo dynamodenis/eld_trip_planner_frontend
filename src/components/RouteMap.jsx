@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 
-// Free alternative - you'd need to sign up
-mapboxgl.accessToken = 'your_mapbox_token';
+// Free to google maps, we sign up and get a token
+// https://docs.mapbox.com/help/how-mapbox-works/access-tokens/
+mapboxgl.accessToken = 'pk.eyJ1IjoiZHluYW1vZGVuaXMyNTQiLCJhIjoiY204ZXNpZDV6MDVoMTJsc2RjdTlyZ2RvbCJ9.Em7uQMvvvAvl1sVufYhOww';
 
 const RouteMap = ({ route }) => {
   const mapContainer = useRef(null);

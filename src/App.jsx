@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import TripForm from './components/TripForm';
+import Form from './components/Form';
 import RouteMap from './components/RouteMap';
-import ELDLogs from './components/ELDLogs';
+import Logs from './components/Logs';
 import './styles/App.css';
 
 function App() {
@@ -16,13 +16,13 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>ELD Trip Planner</h1>
+        <h1>Trip Planner</h1>
         <p>Plan your commercial trips with HOS regulations in mind</p>
       </header>
       
       <main className="app-content">
         <div className="left-panel">
-          <TripForm 
+          <Form 
             onSubmit={handleTripSubmission} 
             setLoading={setLoading} 
             setError={setError} 
@@ -42,7 +42,7 @@ function App() {
         ) : tripData ? (
           <div className="right-panel">
             <RouteMap route={tripData.route} />
-            <ELDLogs logSheets={tripData.log_sheets} />
+            <Logs logSheets={tripData.log_sheets} />
           </div>
         ) : (
           <div className="right-panel empty-state">
@@ -52,7 +52,7 @@ function App() {
       </main>
       
       <footer className="app-footer">
-        <p>&copy; 2025 ELD Trip Planner</p>
+        <p>&copy; 2025 Trip Planner</p>
       </footer>
     </div>
   );
