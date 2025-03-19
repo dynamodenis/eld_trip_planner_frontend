@@ -17,7 +17,7 @@ function App() {
     <div className="app">
       <header className="app-header">
         <h1>Trip Planner</h1>
-        <p>Plan your commercial trips with HOS regulations in mind</p>
+        <p>Move with ease and confidence</p>
       </header>
       
       <main className="app-content">

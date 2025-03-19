@@ -3,9 +3,10 @@ import mapboxgl from 'mapbox-gl';
 
 // Free to google maps, we sign up and get a token
 // https://docs.mapbox.com/help/how-mapbox-works/access-tokens/
-mapboxgl.accessToken = 'pk.eyJ1IjoiZHluYW1vZGVuaXMyNTQiLCJhIjoiY204ZXNpZDV6MDVoMTJsc2RjdTlyZ2RvbCJ9.Em7uQMvvvAvl1sVufYhOww';
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_API_KEY;
 
 const RouteMap = ({ route }) => {
+  console.log("access token", mapboxgl.accessToken);
   const mapContainer = useRef(null);
   const map = useRef(null);
   
@@ -16,19 +17,19 @@ const RouteMap = ({ route }) => {
     
     // Get route coordinates
     let coordinates = [];
-    if (route.to_pickup && route.to_pickup.routes && route.to_pickup.routes[0]) {
-      const toPickupCoords = route.to_pickup.routes[0].geometry;
+    if (route.to_pickup && route.to_pickup.features && route.to_pickup.features[0]) {
+      const toPickupCoords = route.to_pickup.features[0].geometry.coordinates;
       coordinates = coordinates.concat(toPickupCoords);
     }
     
-    if (route.pickup_to_dropoff && route.pickup_to_dropoff.routes && route.pickup_to_dropoff.routes[0]) {
-      const toDropoffCoords = route.pickup_to_dropoff.routes[0].geometry;
+    if (route.pickup_to_dropoff && route.pickup_to_dropoff.features && route.pickup_to_dropoff.features[0]) {
+      const toDropoffCoords = route.pickup_to_dropoff.features[0].geometry.coordinates;
       coordinates = coordinates.concat(toDropoffCoords);
     }
-    
+
     // If we have no coordinates, don't try to initialize the map
     if (coordinates.length === 0) return;
-    
+
     // Initialize map
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
