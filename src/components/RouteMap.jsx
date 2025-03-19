@@ -6,7 +6,6 @@ import mapboxgl from 'mapbox-gl';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_API_KEY;
 
 const RouteMap = ({ route }) => {
-  console.log("access token", mapboxgl.accessToken);
   const mapContainer = useRef(null);
   const map = useRef(null);
   
