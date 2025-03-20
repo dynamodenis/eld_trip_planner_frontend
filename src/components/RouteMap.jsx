@@ -16,15 +16,21 @@ const RouteMap = ({ route }) => {
     
     // Get route coordinates
     let coordinates = [];
+    
     if (route.to_pickup && route.to_pickup.features && route.to_pickup.features[0]) {
       const toPickupCoords = route.to_pickup.features[0].geometry.coordinates;
       coordinates = coordinates.concat(toPickupCoords);
     }
-    
+
+    const currentCoord = coordinates[0]
+    const pickupCoord = coordinates[coordinates.length -1]
+
     if (route.pickup_to_dropoff && route.pickup_to_dropoff.features && route.pickup_to_dropoff.features[0]) {
       const toDropoffCoords = route.pickup_to_dropoff.features[0].geometry.coordinates;
       coordinates = coordinates.concat(toDropoffCoords);
     }
+
+    const dropoffCoord = coordinates[coordinates.length-1]
 
     // If we have no coordinates, don't try to initialize the map
     if (coordinates.length === 0) return;
@@ -67,6 +73,9 @@ const RouteMap = ({ route }) => {
         }
       });
       
+      // Add current, pickup and dropoff coordinates
+      addLocationMapper(currentCoord, pickupCoord, dropoffCoord)
+
       // Add markers for stops
       addStopsToMap(route.stops);
       
@@ -128,6 +137,47 @@ const RouteMap = ({ route }) => {
       new mapboxgl.Marker(el)
         .setLngLat([0, 0]) // Example - would need real coordinates
         .setPopup(new mapboxgl.Popup().setHTML('<h3>Fuel Stop</h3>'))
+        .addTo(map.current);
+    }
+  };
+
+  const addLocationMapper = (currentCoord, pickupCoord, dropoffCoord) => {
+    
+    // Add markers for current location
+    if (currentCoord && map.current) {
+      console.log("currentCoord", currentCoord)
+      // This would need real coordinate calculations in a production app
+      
+      new mapboxgl.Marker({
+        color: '#2ecc71', // Green color
+        scale: 0.6
+      })
+        .setLngLat(currentCoord)
+        .setPopup(new mapboxgl.Popup().setHTML('<span>Current Location</span>'))
+        .addTo(map.current);
+    }
+    
+    // Add markers for pickup location
+    if (pickupCoord && map.current) {
+      // Use the Mapbox built-in marker with custom options
+      new mapboxgl.Marker({
+        color: '#3498db', // Blue color
+        scale: 0.6
+      })
+        .setLngLat(pickupCoord)
+        .setPopup(new mapboxgl.Popup().setHTML('<span>Pickup Location</span>'))
+        .addTo(map.current);
+    }
+
+    // Add markers for dropoff location
+    if (dropoffCoord && map.current) {
+      // Use the Mapbox built-in marker with custom options
+      new mapboxgl.Marker({
+        color: '#e74c3c', // Red color
+        scale: 0.6
+      })
+        .setLngLat(dropoffCoord)
+        .setPopup(new mapboxgl.Popup().setHTML('<span>Dropoff Location</span>'))
         .addTo(map.current);
     }
   };
