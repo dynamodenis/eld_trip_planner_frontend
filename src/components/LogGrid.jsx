@@ -5,7 +5,7 @@ const LogGrid = ({ logData }) => {
   
   useEffect(() => {
     if (!logData || !canvasRef.current) return;
-    
+    // We will use Canvas to draw the logs
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     

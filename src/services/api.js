@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8000'; // Replace with your deployed backend URL
+const API_BASE_URL = 'https://eld-trip-planner-eta.vercel.app'; // Replace with your deployed backend URL
 
 export const submitTripDetails = async (tripData) => {
   try {
