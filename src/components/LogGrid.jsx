@@ -152,7 +152,7 @@ const LogGrid = ({ logData }) => {
           </div>
           <div className="info-row">
             <span className="label">Carrier:</span>
-            <span className="value">Sample Carrier Inc.</span>
+            <span className="value">DHL.</span>
           </div>
         </div>
         <div className="status-legend">

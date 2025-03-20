@@ -104,38 +104,38 @@ const RouteMap = ({ route }) => {
     // For this starter code, we'll use some example logic
     
     // Add markers for each 10-hour break
-    for (let i = 0; i < stops.ten_hour_breaks; i++) {
+    for (let i = 0; i < stops.ten_hour_breaks?.number_of_breaks; i++) {
       // This would need real coordinate calculations in a production app
       const el = document.createElement('div');
       el.className = 'stop-marker rest-stop';
       el.innerHTML = '<span>10hr</span>';
       
       new mapboxgl.Marker(el)
-        .setLngLat([0, 0]) // Example - would need real coordinates
+        .setLngLat(stops?.ten_hour_breaks?.location || [0,0]) 
         .setPopup(new mapboxgl.Popup().setHTML('<h3>10-Hour Rest Break</h3>'))
         .addTo(map.current);
     }
     
     // Add markers for each 30-minute break
-    for (let i = 0; i < stops.thirty_min_breaks; i++) {
+    for (let i = 0; i < stops.thirty_min_breaks?.number_of_breaks; i++) {
       const el = document.createElement('div');
       el.className = 'stop-marker break-stop';
       el.innerHTML = '<span>30m</span>';
       
       new mapboxgl.Marker(el)
-        .setLngLat([0, 0]) // Example - would need real coordinates
+        .setLngLat( stops.thirty_min_breaks?.location || [0, 0]) 
         .setPopup(new mapboxgl.Popup().setHTML('<h3>30-Minute Break</h3>'))
         .addTo(map.current);
     }
     
     // Add markers for each fuel stop
-    for (let i = 0; i < stops.fuel_stops; i++) {
+    for (let i = 0; i < stops.fuel_stops?.number_of_fuel_stops; i++) {
       const el = document.createElement('div');
       el.className = 'stop-marker fuel-stop';
       el.innerHTML = '<span>⛽</span>';
       
       new mapboxgl.Marker(el)
-        .setLngLat([0, 0]) // Example - would need real coordinates
+        .setLngLat( stops.fuel_stops?.location || [0, 0])
         .setPopup(new mapboxgl.Popup().setHTML('<h3>Fuel Stop</h3>'))
         .addTo(map.current);
     }
@@ -145,7 +145,6 @@ const RouteMap = ({ route }) => {
     
     // Add markers for current location
     if (currentCoord && map.current) {
-      console.log("currentCoord", currentCoord)
       // This would need real coordinate calculations in a production app
       
       new mapboxgl.Marker({
@@ -203,9 +202,9 @@ const RouteMap = ({ route }) => {
           <div className="stops-summary">
             <h3>Required Stops:</h3>
             <ul>
-              <li>{route.stops.ten_hour_breaks} 10-hour rest breaks</li>
-              <li>{route.stops.thirty_min_breaks} 30-minute breaks</li>
-              <li>{route.stops.fuel_stops} fuel stops</li>
+              <li>{route.stops.ten_hour_breaks?.number_of_breaks} rest in 10-hour rest breaks</li>
+              <li>{route.stops.thirty_min_breaks?.number_of_breaks} rest in 30-minute breaks</li>
+              <li>{route.stops.fuel_stops?.number_of_fuel_stops} fuel stops</li>
             </ul>
           </div>
         </div>
